@@ -4,7 +4,7 @@ package u04lab.code
 trait Student:
   def name: String
   def year: Int
-  def enrolling(course: Course*): Unit // the student participates to a Course
+  def enrolling(course: Course* ): Unit // the student participates to a Course
   def courses: List[String] // names of course the student participates to
   def hasTeacher(teacher: String): Boolean // is the student participating to a course of this teacher?
 
