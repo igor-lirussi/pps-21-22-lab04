@@ -1,6 +1,5 @@
 package u04lab.code
 
-import List.*
 
 trait Student:
   def name: String
@@ -14,10 +13,20 @@ trait Course:
   def teacher: String
 
 object Student:
-  def apply(name: String, year: Int = 2017): Student = ???
+  def apply(name: String, year: Int = 2017): Student = StudentImpl(name, year)
+  private case class StudentImpl(override val name:String, override val year:Int) extends Student:
+
+    import u04lab.code.List.*
+    private var coursesList :List[Course] = Nil()
+    override def courses: List[String] = List.map(coursesList)(c => c.name)
+    override def enrolling(course: Course): Unit = coursesList = List.append(coursesList, Cons(course, Nil()))
+
+    override def hasTeacher(teacher: String): Boolean = List.contains(List.map(coursesList)( c=>c.teacher),teacher) 
 
 object Course:
-  def apply(name: String, teacher: String): Course = ???
+  def apply(name: String, teacher: String): Course = CourseImpl(name, teacher)
+
+  private case class CourseImpl(override val name:String, override val teacher:String) extends Course
 
 @main def checkStudents(): Unit =
   val cPPS = Course("PPS", "Viroli")
