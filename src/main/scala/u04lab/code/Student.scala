@@ -4,7 +4,7 @@ package u04lab.code
 trait Student:
   def name: String
   def year: Int
-  def enrolling(course: Course): Unit // the student participates to a Course
+  def enrolling(course: Course*): Unit // the student participates to a Course
   def courses: List[String] // names of course the student participates to
   def hasTeacher(teacher: String): Boolean // is the student participating to a course of this teacher?
 
@@ -19,9 +19,9 @@ object Student:
     import u04lab.code.List.*
     private var coursesList :List[Course] = Nil()
     override def courses: List[String] = List.map(coursesList)(c => c.name)
-    override def enrolling(course: Course): Unit = coursesList = List.append(coursesList, Cons(course, Nil()))
+    override def enrolling(course: Course*): Unit =   course foreach ( course => coursesList = Cons(course, coursesList) )
 
-    override def hasTeacher(teacher: String): Boolean = List.contains(List.map(coursesList)( c=>c.teacher),teacher) 
+    override def hasTeacher(teacher: String): Boolean = List.contains(List.map(coursesList)( c=>c.teacher),teacher)
 
 object Course:
   def apply(name: String, teacher: String): Course = CourseImpl(name, teacher)
